@@ -14,36 +14,38 @@ int main(){
     switch (code)
     {
     case 1:
-      alcohol += 1;
-      menu();
-      printf("\n");
-      scanf("%d", &code);
-      break;
+    alcohol += 1;
+    menu();
+    printf("\n");
+    scanf("%d", &code);
+    break;
 
     case 2:
-      gasoline += 1;
-      menu();
-      printf("\n");
-      scanf("%d", &code);
-      break;
+    gasoline += 1;
+    menu();
+    printf("\n");
+    scanf("%d", &code);
+    break;
+
     case 3:
-      diesel += 1;
-      menu();
-      printf("\n");
-      scanf("%d", &code);
-      break;
+    diesel += 1;
+    menu();
+    printf("\n");
+    scanf("%d", &code);
+    break;
 
     default:
-      printf("TENTE NOVAMENTE!\n");
-      menu();
-      printf("\n");
-      scanf("%d", &code);
-      break;
+    printf("TENTE NOVAMENTE!\n");
+    menu();
+    printf("\n");
+    scanf("%d", &code);
+    break;
 
     }
- }
-      printf("Obrigada!\n");
-      printf("Alcool: %d\nGasolina: %d\nDiesel: %d\n", alcohol, gasoline, diesel);
+  }
+
+  printf("Obrigada!\n");
+  printf("Alcool: %d\nGasolina: %d\nDiesel: %d\n", alcohol, gasoline, diesel);
 
   return 0;
     
