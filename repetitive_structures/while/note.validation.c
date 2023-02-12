@@ -2,7 +2,7 @@
 
 int main(){
 
-  double first_note, last_note, media;
+  double first_note, last_note, everage;
 
   scanf("%lf", &first_note);
 
@@ -17,8 +17,8 @@ int main(){
     printf("Nota Invalida, Tente Novamente!\n");
     scanf("%lf", &last_note);
   }
-  media = (last_note + first_note)/2;
-  printf("Média: %.2lf\n", media);
+  everage = (last_note + first_note)/2;
+  printf("Média: %.2lf\n", everage);
 
   return 0;
 }
