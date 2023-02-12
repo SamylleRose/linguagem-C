@@ -2,7 +2,7 @@
 
 int main(){
 
-  int code,alcohol = 0, gasoline = 0, diesel =0;
+  int code,alcohol = 0, gasoline = 0, diesel;
   void menu(void);
 
   menu();
@@ -14,20 +14,20 @@ int main(){
     switch (code)
     {
     case 1:
-      alcohol = alcohol + 1;
+      alcohol += 1;
       menu();
       printf("\n");
       scanf("%d", &code);
       break;
 
     case 2:
-      gasoline = gasoline + 1;
+      gasoline += 1;
       menu();
       printf("\n");
       scanf("%d", &code);
       break;
     case 3:
-      diesel = diesel + 1;
+      diesel += 1;
       menu();
       printf("\n");
       scanf("%d", &code);
