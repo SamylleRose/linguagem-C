@@ -56,6 +56,7 @@ void calculo(int codigo, int line, int column, int matrix[line][column]){
 
   if ( codigo == 1){
 
+    matrixinversa(line, column, matrix);
 
   }
 
@@ -84,5 +85,22 @@ void printar(int column, int line, int matrix[line][column]){
     printf("\n");
     
   }
+
+}
+
+void matrixinversa( int line, int column, int matrix[line][column]){
+  int i, j;
+
+  for(i = 0; i < line; i++){
+    for(j = 0; j < column; j++){
+      if( i == j){
+
+      }
+
+    }
+    
+  }
+
+ 
 
 }
