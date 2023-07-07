@@ -4,6 +4,7 @@ void inserir_dados(int line, int column, int matrix[line][column]);
 int menu();
 void calculo(int codigo, int line, int column, int matrix[line][column]);
 void printar(int column, int line, int matrix[line][column]);
+void matrixidentidade( int line, int column, int matrix[line][column]);
 
 int main(){
 
@@ -56,12 +57,13 @@ void calculo(int codigo, int line, int column, int matrix[line][column]){
 
   if ( codigo == 1){
 
-    matrixinversa(line, column, matrix);
+   
 
   }
 
   else if(codigo == 2){
 
+    matrixidentidade(line, column,matrix);
 
   }
 
@@ -89,18 +91,41 @@ void printar(int column, int line, int matrix[line][column]){
 }
 
 void matrixinversa( int line, int column, int matrix[line][column]){
+  int i, j, diagonal1, diagonal2;
+
+  for(i = 0; i < line; i++){
+    diagonal1 = matrix[i][i] * matrix[i + 1][i + 1];
+
+  }
+
+
+    
+  
+}
+ 
+
+
+
+void matrixidentidade( int line, int column, int matrix[line][column]){ 
   int i, j;
 
   for(i = 0; i < line; i++){
     for(j = 0; j < column; j++){
-      if( i == j){
+      
+      if (i==j){
+        matrix[i][j] = 1;
 
       }
+
+      else { 
+        matrix[i][j] = 0;
+
+      }
+      
 
     }
     
   }
 
- 
 
 }

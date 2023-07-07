@@ -6,7 +6,7 @@ void inserir_dados(int matrix[][3]);
 int main(){
 
   int matrix[3][3];
-  double resultado;;
+  double resultado;
 
   inserir_dados(matrix);
   resultado = soma_matrix(matrix);
