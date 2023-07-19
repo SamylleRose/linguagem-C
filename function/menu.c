@@ -1,41 +1,42 @@
 #include <stdio.h>
 
-void inserir_dados(int line, int column, int matrix[line][column]);
+void matrixinversa2x2( int number, float matrix[][number]);
+void matrixidentidade2x2( int number,float matrix[][number]);
+void printar(int number, float matrix[][number]);
 int menu();
-void calculo(int codigo, int line, int column, int matrix[line][column]);
-void printar(int column, int line, int matrix[line][column]);
-void matrixidentidade( int line, int column, int matrix[line][column]);
+void calculo(int codigo, int number ,float matrix[][number]);
+void inserir_dados(int number, float matrix[][number]);
 
 int main(){
 
-  int line, column, codigo;
+  int number, codigo;
 
-  scanf("%d%d", &line, &column);
+  scanf("%d", &number);
 
-  int matrix[line][column];
+  float matrix[number][number];
   printf("\n");
 
-  inserir_dados(line, column, matrix);
+  inserir_dados(number, matrix);
   printf("\n");
   codigo = menu();
-  calculo(codigo, line, column, matrix);
-  printar(column, line, matrix);
+  calculo(codigo, number, matrix);
+  printar(number, matrix);
 
 
   return 0;
 
 }
 
-void inserir_dados(int line, int column, int matrix[line][column]){
+void inserir_dados(int number, float matrix[][number]){
   int i, j;
 
-  for(i = 0; i < line; i++){
-    for(j = 0; j < column; j++){
-      scanf("%d", &matrix[i][j]);
+  for(i = 0; i < number; i++){
+    for(j = 0; j <number; j++){
+      scanf("%f", &matrix[i][j]);
 
     }
   }
-
+ printf("\n");
 }
 
 int menu(){
@@ -48,39 +49,36 @@ int menu(){
   printf("|   Matriz transposta                                 3           |\n");
   printf("===================================================================\n");
 
+  printf("\n");
   scanf("%d", &codigo);
 
   return codigo;
 }
 
-void calculo(int codigo, int line, int column, int matrix[line][column]){
+void calculo(int codigo, int number, float matrix[][number]){
 
   if ( codigo == 1){
-
-   
+   matrixinversa2x2(number, matrix);
 
   }
 
   else if(codigo == 2){
-
-    matrixidentidade(line, column,matrix);
+    matrixidentidade2x2(number,matrix);
 
   }
 
   else if(codigo == 3){
 
-
   }
-
 
 }
 
-void printar(int column, int line, int matrix[line][column]){
+void printar(int number, float matrix[][number]){
   int i, j;
 
-  for(i = 0; i < line; i++){
-    for(j = 0; j < column; j++){
-      printf("%d",matrix[i][j]);
+  for(i = 0; i < number; i++){
+    for(j = 0; j < number;j++){
+      printf("%.2f ",matrix[i][j]);
 
     }
 
@@ -90,27 +88,43 @@ void printar(int column, int line, int matrix[line][column]){
 
 }
 
-void matrixinversa( int line, int column, int matrix[line][column]){
-  int i, j, diagonal1, diagonal2;
+void matrixinversa2x2( int number, float matrix[][number]){
+  int diagonal1, diagonal2, determinante, i, j, troca;
+ 
+  diagonal1 = matrix[0][0] * matrix[1][1];
+  diagonal2 = matrix[0][1]* matrix[1][0];
 
-  for(i = 0; i < line; i++){
-    diagonal1 = matrix[i][i] * matrix[i + 1][i + 1];
+  determinante = diagonal1 - diagonal2;
+
+  for(i = 0; i < number; i++){
+    for(j = 0; j < number; j++){
+      matrix[i][j] = matrix[i][j] / determinante;
+
+    }
+
+  }
+
+  troca = matrix[0][0];
+  matrix[0][0] = matrix[1][1];
+  matrix[1][1] = troca;
+
+  for(i = 0; i < number; i++){
+    for(j = 0; j < number; j++){
+     matrix[i][j] = matrix[i][j] * -1;
+
+    }
 
   }
 
 
-    
   
 }
  
-
-
-
-void matrixidentidade( int line, int column, int matrix[line][column]){ 
+void matrixidentidade2x2( int number, float matrix[][number]){ 
   int i, j;
 
-  for(i = 0; i < line; i++){
-    for(j = 0; j < column; j++){
+  for(i = 0; i < number; i++){
+    for(j = 0; j < number; j++){
       
       if (i==j){
         matrix[i][j] = 1;
@@ -120,12 +134,10 @@ void matrixidentidade( int line, int column, int matrix[line][column]){
       else { 
         matrix[i][j] = 0;
 
-      }
-      
+      } 
 
     }
     
   }
-
 
 }
