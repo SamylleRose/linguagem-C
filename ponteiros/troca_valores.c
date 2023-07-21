@@ -15,7 +15,7 @@ int main(){
 
   troca_com_ponteiro(ponteironumber1,ponteironumber2);
 
-  printf("valor alterado %d %d\n", number1, number2);
+  printf("valor alterado %d %d \n", number1, number2);
 
   return 0;
 

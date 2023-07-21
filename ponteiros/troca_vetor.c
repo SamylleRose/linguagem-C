@@ -8,7 +8,7 @@ int main(){
 
   for (int i = 0; i < 5; i++){
     if (number < *vector + i){
-      number = vector[i];
+      number = vector[i]; 
 
     }
 
