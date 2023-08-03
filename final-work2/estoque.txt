@@ -1,12 +1,2 @@
-figado;carne;45;3.00
-arooza;graos;3;2.00
-banana;roupa;3;1.00
-oleo;liquido;3;4.00
-agua;bebiba;24;1.00
-milho;roupa;34;23.00
-queijo;laticinio;34;2.00
-requeijao;latex;22;3.50
-lentilha;graos;34;2.00
-viagra;farmaceutico;23;23.57
-FRAUDA;FARMACIA;234;70.50
-samylle;11/10/2002;1234566;72.98
+figado;carne;45;18.90
+viagra;farmaceutico;20;500.00

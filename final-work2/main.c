@@ -25,20 +25,26 @@ void cadastrar_produto(tipo_produto *produto, int *quantidade_de_produtos);
 void salvar_arquivo_dos_produtos(tipo_produto *produto, int quantidade_de_produtos);
 void editar_produto(tipo_produto *produto, int quantidade_de_produtos);
 void consultar_produto(tipo_produto *produto, int quantidade_de_produtos);
-void menu_principal(tipo_produto *produto, int quantidade_de_produtos);
-void menu_estoque(tipo_produto *produto, int quantidade_de_produtos);
+void menu_principal(tipo_produto *produto, int *quantidade_de_produtos, tipo_cliente *cliente, int *quantidade_de_clientes);
+void menu_estoque(tipo_produto *produto, int *quantidade_de_produtos);
 void menu_cliente();
 void menu_caixa();
+void carregar_arquivo_dos_clientes(tipo_cliente *cliente, int *quantidade_de_clientes);
+void salvar_arquivo_dos_clientes(tipo_cliente *cliente, int quantidade_de_clientes);
+void cadastrar_cliente(tipo_cliente *cliente, int *quantidade_de_cliente);
 
 int main()
 {
   int quantidade_de_produtos = 0;
   int quantidade_de_clientes = 0;
   tipo_produto produto[1000];
+  tipo_cliente cliente[1000];
 
   carregar_arquivo_dos_produtos(produto, &quantidade_de_produtos);
   salvar_arquivo_dos_produtos(produto, quantidade_de_produtos);
-  menu_principal(produto, quantidade_de_produtos);
+  carregar_arquivo_dos_clientes(cliente, &quantidade_de_clientes);
+  salvar_arquivo_dos_clientes(cliente, quantidade_de_clientes);
+  menu_principal(produto, &quantidade_de_produtos, cliente, &quantidade_de_clientes);
 
   // editar_produto(produto, quantidade_de_produtos);
   // printf("%s\n", produto[1].nome);
@@ -51,19 +57,21 @@ int main()
 
 void cadastrar_produto(tipo_produto *produto, int *quantidade_de_produtos)
 {
-  printf("Digite o nome do produto: ");
+  printf("Digite o dados do produto: \n");
+  printf("Nome: ");
   scanf("%s", produto[*quantidade_de_produtos].nome);
 
-  printf("Digite o tipo do produto: ");
+  printf("Tipo: ");
   scanf("%s", produto[*quantidade_de_produtos].tipo);
 
-  printf("Digite a quantidade do produto: ");
+  printf("Quantidade: ");
   scanf("%d", &produto[*quantidade_de_produtos].quantidade);
 
-  printf("Digite o valor do produto: ");
+  printf("Valor: R$ ");
   scanf("%lf", &produto[*quantidade_de_produtos].valor);
   printf("\n");
   (*quantidade_de_produtos)++;
+
 }
 
 void carregar_arquivo_dos_produtos(tipo_produto *produto, int *quantidade_de_produtos)
@@ -122,14 +130,14 @@ void editar_produto(tipo_produto *produto, int quantidade_de_produtos)
   salvar_arquivo_dos_produtos(produto, quantidade_de_produtos);
 }
 
-void consultar_produto(tipo_produto *produto, int quantidade_de_produtos)
+void  consultar_produto(tipo_produto *produto, int quantidade_de_produtos)
 
 {
   char linha[150];
   FILE *fp;
   fp = fopen("estoque.txt", "r");
 
-  printf("====================== CONSULTAR PRODUTOS ==================\n\n");
+  printf("========================= CONSULTAR PRODUTOS ========================\n\n");
   for (int i = 0; fgets(linha, sizeof(linha), fp) != NULL; i++)
   {
     printf("===================================================================\n");
@@ -145,7 +153,7 @@ void consultar_produto(tipo_produto *produto, int quantidade_de_produtos)
   fclose(fp);
 }
 
-void menu_principal(tipo_produto *produto, int quantidade_de_produtos)
+void menu_principal(tipo_produto *produto, int *quantidade_de_produtos, tipo_cliente *cliente, int *quantidade_de_clientes)
 {
   int codigo;
   do
@@ -170,7 +178,7 @@ void menu_principal(tipo_produto *produto, int quantidade_de_produtos)
       break;
 
     case 2:
-      menu_cliente();
+      menu_cliente(cliente, quantidade_de_clientes);
 
       break;
 
@@ -192,7 +200,7 @@ void menu_principal(tipo_produto *produto, int quantidade_de_produtos)
   } while (codigo != 4);
 }
 
-void menu_estoque(tipo_produto *produto, int quantidade_de_produtos)
+void menu_estoque(tipo_produto *produto, int *quantidade_de_produtos)
 {
   int codigo;
   do
@@ -214,17 +222,17 @@ void menu_estoque(tipo_produto *produto, int quantidade_de_produtos)
     switch (codigo)
     {
     case 1:
-      cadastrar_produto(produto, &quantidade_de_produtos);
-      salvar_arquivo_dos_produtos(produto, quantidade_de_produtos);
+      cadastrar_produto(produto, quantidade_de_produtos);
+      salvar_arquivo_dos_produtos(produto, *quantidade_de_produtos);
       break;
 
     case 2:
-      consultar_produto(produto, quantidade_de_produtos);
+      consultar_produto(produto, *quantidade_de_produtos);
 
       break;
 
     case 3:
-      editar_produto(produto, quantidade_de_produtos);
+      editar_produto(produto, *quantidade_de_produtos);
 
       break;
 
@@ -244,7 +252,7 @@ void menu_estoque(tipo_produto *produto, int quantidade_de_produtos)
   } while (codigo != 5);
 }
 
-void menu_cliente()
+void menu_cliente(tipo_cliente *cliente, int *quantidade_de_clientes)
 {
   int codigo;
   do
@@ -265,7 +273,8 @@ void menu_cliente()
     switch (codigo)
     {
     case 1:
-
+      cadastrar_cliente(cliente, quantidade_de_clientes);
+      salvar_arquivo_dos_clientes(cliente, *quantidade_de_clientes);
       break;
 
     case 2:
@@ -340,7 +349,7 @@ void menu_caixa()
   } while (codigo != 5);
 }
 
-void carregar_arquivos_dos_clientes(tipo_cliente *cliente, int *quantidade_de_clientes){
+void carregar_arquivo_dos_clientes(tipo_cliente *cliente, int *quantidade_de_clientes){
 int i;
   char linha[150];
   FILE *fp;
@@ -348,11 +357,45 @@ int i;
 
   for (i = 0; fgets(linha, sizeof(linha), fp) != NULL; i++)
   {
-    sscanf(linha, "%[^;];%[^;];%d;%lf", cliente[i].nome, cliente[i].RG, &cliente[i].CPF, &cliente[i].data_de_nascimento);
+    sscanf(linha, "%[^;];%[^;];%[^;];%[^;]", cliente[i].nome, cliente[i].RG, cliente[i].CPF, cliente[i].data_de_nascimento);
   }
 
   *quantidade_de_clientes = i;
 
   fclose(fp);
    
+}
+
+void salvar_arquivo_dos_clientes(tipo_cliente *cliente, int quantidade_de_clientes)
+{
+
+  FILE *fp;
+  fp = fopen("clientes.txt", "w");
+
+  for (int i = 0; i < quantidade_de_clientes; i++)
+  {
+
+    fprintf(fp, "%s;%s;%s;%s\n", cliente[i].nome, cliente[i].RG, cliente[i].CPF, cliente[i].data_de_nascimento);
+  }
+
+  fclose(fp);
+}
+
+void cadastrar_cliente(tipo_cliente *cliente, int *quantidade_de_cliente)
+{
+  printf("Digite os dados do cliente:\n");
+  printf("Nome: ");
+  scanf("%s", cliente[*quantidade_de_cliente].nome);
+
+  printf("RG: ");
+  scanf("%s", cliente[*quantidade_de_cliente].RG);
+
+  printf("CPF: ");
+  scanf("%s", cliente[*quantidade_de_cliente].CPF);
+
+  printf("Data de nascimento: ");
+  scanf("%s", cliente[*quantidade_de_cliente].data_de_nascimento);
+  printf("\n");
+  (*quantidade_de_cliente)++;
+
 }
