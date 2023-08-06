@@ -24,22 +24,25 @@ void cadastrar_produto(tipo_produto *produto, int *quantidade_de_produtos);
 void salvar_arquivo_dos_produtos(tipo_produto *produto, int quantidade_de_produtos);
 void editar_produto(tipo_produto *produto, int quantidade_de_produtos);
 void consultar_produto(tipo_produto *produto, int quantidade_de_produtos);
-void menu_principal(tipo_produto *produto, int *quantidade_de_produtos, tipo_cliente *cliente, int *quantidade_de_clientes, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa );
+void menu_principal(tipo_produto *produto, int *quantidade_de_produtos, tipo_cliente *cliente, int *quantidade_de_clientes, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa, char cpfs[][20]);
 void menu_estoque(tipo_produto *produto, int *quantidade_de_produtos);
-void menu_cliente();
-void menu_caixa();
+void menu_cliente(tipo_cliente *cliente, int *quantidade_de_clientes);
+void menu_caixa(tipo_cliente *cliente, int quantidade_de_clientes, tipo_produto *produto, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa, int quantidade_de_produtos, char cpfs[][20]);
 void carregar_arquivo_dos_clientes(tipo_cliente *cliente, int *quantidade_de_clientes);
 void salvar_arquivo_dos_clientes(tipo_cliente *cliente, int quantidade_de_clientes);
 void cadastrar_cliente(tipo_cliente *cliente, int *quantidade_de_cliente);
 void consultar_cliente(tipo_cliente *cliente, int quantidade_de_clientes);
 void editar_cliente(tipo_cliente *cliente, int quantidade_de_clientes);
-void carregar_arquivo_do_caixa(double *valor_do_caixa, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos);
-void salvar_arquivo_do_caixa(double valor_do_caixa, int quantidade_de_vendas_realizadas, int quantidade_de_produtos_vendidos);
-void realizar_venda(tipo_produto *produto, tipo_cliente *cliente, int quantidade_de_clientes, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa);
-
+void carregar_arquivo_do_caixa(double *valor_do_caixa, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, char cpfs[][20], int *quantidade_de_cpf_adicionado);
+void salvar_arquivo_do_caixa(double valor_do_caixa, int quantidade_de_vendas_realizadas, int quantidade_de_produtos_vendidos, char cpfs[][20], int quantidade_de_cpf_adcionado);
+void realizar_venda(tipo_produto *produto, tipo_cliente *cliente, int quantidade_de_clientes, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa, char cpfs[][20]);
+void total_do_caixa(double valor_do_caixa);
+void total_de_vendas_realizadas(int quantidade_de_vendas_realizadas);
+void total_de_produtos_vendidos(int quantidade_de_produtos_vendidos);
 int main()
 {
   int quantidade_de_produtos = 0, quantidade_de_clientes = 0, quantidade_de_vendas_realizadas = 0, quantidade_de_produtos_vendidos = 0, quantidade_de_cpf_adcionado = 0;
+  char cpfs[1000][20];
   double valor_do_caixa = 0;
 
   tipo_produto produto[1000];
@@ -49,10 +52,9 @@ int main()
   salvar_arquivo_dos_produtos(produto, quantidade_de_produtos);
   carregar_arquivo_dos_clientes(cliente, &quantidade_de_clientes);
   salvar_arquivo_dos_clientes(cliente, quantidade_de_clientes);
-  carregar_arquivo_do_caixa(&valor_do_caixa, &quantidade_de_vendas_realizadas, &quantidade_de_produtos_vendidos);
-  salvar_arquivo_do_caixa(valor_do_caixa, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos);
-
-  menu_principal(produto, &quantidade_de_produtos, cliente, &quantidade_de_clientes, &quantidade_de_vendas_realizadas, &quantidade_de_produtos_vendidos, &quantidade_de_cpf_adcionado, &valor_do_caixa);
+  carregar_arquivo_do_caixa(&valor_do_caixa, &quantidade_de_vendas_realizadas, &quantidade_de_produtos_vendidos, cpfs, &quantidade_de_cpf_adcionado);
+  salvar_arquivo_do_caixa(valor_do_caixa, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos, cpfs, quantidade_de_cpf_adcionado);
+  menu_principal(produto, &quantidade_de_produtos, cliente, &quantidade_de_clientes, &quantidade_de_vendas_realizadas, &quantidade_de_produtos_vendidos, &quantidade_de_cpf_adcionado, &valor_do_caixa, cpfs);
 
   // editar_produto(produto, quantidade_de_produtos);
   // printf("%s\n", produto[1].nome);
@@ -183,7 +185,7 @@ void consultar_produto(tipo_produto *produto, int quantidade_de_produtos)
   }
 }
 
-void menu_principal(tipo_produto *produto, int *quantidade_de_produtos, tipo_cliente *cliente, int *quantidade_de_clientes, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa)
+void menu_principal(tipo_produto *produto, int *quantidade_de_produtos, tipo_cliente *cliente, int *quantidade_de_clientes, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa, char cpfs[][20])
 {
   int codigo;
   do
@@ -213,7 +215,7 @@ void menu_principal(tipo_produto *produto, int *quantidade_de_produtos, tipo_cli
       break;
 
     case 3:
-      menu_caixa(cliente, *quantidade_de_clientes, produto, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos, quantidade_de_cpf_adcionado, valor_do_caixa, *quantidade_de_produtos);
+      menu_caixa(cliente, *quantidade_de_clientes, produto, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos, quantidade_de_cpf_adcionado, valor_do_caixa, *quantidade_de_produtos, cpfs);
 
       break;
 
@@ -309,7 +311,7 @@ void menu_cliente(tipo_cliente *cliente, int *quantidade_de_clientes)
       break;
 
     case 2:
-      consultar_cliente(cliente, *quantidade_de_clientes);
+       
       break;
 
     case 3:
@@ -333,7 +335,7 @@ void menu_cliente(tipo_cliente *cliente, int *quantidade_de_clientes)
   } while (codigo != 5);
 }
 
-void menu_caixa(tipo_cliente *cliente, int quantidade_de_clientes, tipo_produto *produto,  int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa, int quantidade_de_produtos)
+void menu_caixa(tipo_cliente *cliente, int quantidade_de_clientes, tipo_produto *produto, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa, int quantidade_de_produtos, char cpfs[][20])
 {
   int codigo;
   do
@@ -354,21 +356,23 @@ void menu_caixa(tipo_cliente *cliente, int quantidade_de_clientes, tipo_produto 
     switch (codigo)
     {
     case 1:
-      realizar_venda(produto, cliente, quantidade_de_clientes, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos, quantidade_de_cpf_adcionado, valor_do_caixa);
-      salvar_arquivo_do_caixa(*valor_do_caixa, *quantidade_de_vendas_realizadas, *quantidade_de_produtos_vendidos);
+      realizar_venda(produto, cliente, quantidade_de_clientes, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos, quantidade_de_cpf_adcionado, valor_do_caixa, cpfs);
+      salvar_arquivo_do_caixa(*valor_do_caixa, *quantidade_de_vendas_realizadas, *quantidade_de_produtos_vendidos, cpfs, *quantidade_de_cpf_adcionado);
       salvar_arquivo_dos_produtos(produto, quantidade_de_produtos);
       break;
 
     case 2:
+      total_de_vendas_realizadas(*quantidade_de_vendas_realizadas);
 
       break;
 
     case 3:
+      total_de_produtos_vendidos(*quantidade_de_produtos_vendidos);
 
       break;
 
     case 4:
-
+      total_do_caixa(*valor_do_caixa);
       break;
 
     case 5:
@@ -441,72 +445,103 @@ void editar_cliente(tipo_cliente *cliente, int quantidade_de_clientes)
   printf("\n");
 }
 
-void realizar_venda(tipo_produto *produto, tipo_cliente *cliente, int quantidade_de_clientes, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa)
+void realizar_venda(tipo_produto *produto, tipo_cliente *cliente, int quantidade_de_clientes, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, int *quantidade_de_cpf_adcionado, double *valor_do_caixa, char cpfs[][20])
 {
 
   int numero_do_produto = 0, i, numero_da_quantidade_de_produto = 0;
   char numero_do_CPF[20];
- 
+
   printf("Insira o numero do item que o cliente deseja comprar: ");
   scanf("%d", &numero_do_produto);
   printf("Insira a quantidade que cliente deseja comprar: ");
   scanf("%d", &numero_da_quantidade_de_produto);
-  printf("Insira o número do CPF do cliente: ");
-  scanf("%s", numero_do_CPF);
 
-  for (int i = 0; i < quantidade_de_clientes; i++)
+  if (((produto[numero_do_produto - 1].quantidade) - numero_da_quantidade_de_produto) < 0)
   {
-    if (strcmp(numero_do_CPF, cliente[i].CPF) == 0)
+    printf("\nvenda não realizada, quantidades de produtos insuficientes! A quantidade de %s no estoque é %d.\n\n", produto[numero_do_produto - 1].nome, produto[numero_do_produto - 1].quantidade);
+  }
+  else
+  {
+    printf("Insira o número do CPF do cliente: ");
+    scanf("%s", numero_do_CPF);
+
+    for (int i = 0; i < quantidade_de_clientes; i++)
     {
-      printf("Venda realizada com sucesso!\n");
+      if (strcmp(numero_do_CPF, cliente[i].CPF) == 0)
+      {
+        printf("\nVenda realizada com sucesso!\n\n");
 
-      (*quantidade_de_vendas_realizadas)++;
-      *quantidade_de_produtos_vendidos += numero_da_quantidade_de_produto;
-      // (*quantidade_de_cpf_adcionado)++;
-      *valor_do_caixa += produto[numero_do_produto - 1].valor;
-      produto[numero_do_produto - 1].quantidade -= numero_da_quantidade_de_produto;
-      
+        (*quantidade_de_vendas_realizadas)++;
+        *quantidade_de_produtos_vendidos += numero_da_quantidade_de_produto;
+        strcpy(cpfs[*quantidade_de_cpf_adcionado], numero_do_CPF);
+        (*quantidade_de_cpf_adcionado)++;
+        *valor_do_caixa += produto[numero_do_produto - 1].valor;
+        produto[numero_do_produto - 1].quantidade -= numero_da_quantidade_de_produto;
 
-      break;
-    }
+        break;
+      }
 
-    else
-    {
-      printf("Cliente não cadastrado, realize o cadastro do cliente!\n");
+      else
+      {
+        printf("\nCliente não cadastrado, realize o cadastro do cliente, para realiza a venda do produto!\n\n");
+      }
     }
   }
 }
 
-void carregar_arquivo_do_caixa(double *valor_do_caixa, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos)
+void carregar_arquivo_do_caixa(double *valor_do_caixa, int *quantidade_de_vendas_realizadas, int *quantidade_de_produtos_vendidos, char cpfs[][20], int *quantidade_de_cpf_adicionado)
 {
   int i;
   char linha[150];
   FILE *fp;
   fp = fopen("caixa.txt", "r");
 
+  fgets(linha, sizeof(linha), fp);
+  sscanf(linha, "%lf;%d;%d", valor_do_caixa, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos);
   for (i = 0; fgets(linha, sizeof(linha), fp) != NULL; i++)
   {
-    sscanf(linha, "%lf;%d;%d;", valor_do_caixa, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos);
+    sscanf(linha, "%s", cpfs[i]);
   }
 
-  // for (i = 1; fgets(linha, sizeof(linha), fp) != NULL; i++)
+  *quantidade_de_cpf_adicionado = i;
+
+  // for (i = 0; i < *quantidade_de_cpf_adicionado; i++)
   // {
-  //   sscanf();
+  //   printf("%s\n", cpfs[i]);
   // }
 
- 
   fclose(fp);
 }
 
-void salvar_arquivo_do_caixa(double valor_do_caixa, int quantidade_de_vendas_realizadas, int quantidade_de_produtos_vendidos)
+void salvar_arquivo_do_caixa(double valor_do_caixa, int quantidade_de_vendas_realizadas, int quantidade_de_produtos_vendidos, char cpfs[][20], int quantidade_de_cpf_adcionado)
 {
 
   FILE *fp;
   fp = fopen("caixa.txt", "w");
 
-  fprintf(fp, "%.2lf;%d;%d;", valor_do_caixa, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos);
-
-  
+  fprintf(fp, "%.2lf;%d;%d\n", valor_do_caixa, quantidade_de_vendas_realizadas, quantidade_de_produtos_vendidos);
+  for (int i = 0; i < quantidade_de_cpf_adcionado; i++)
+  {
+    fprintf(fp, "%s\n", cpfs[i]);
+  }
 
   fclose(fp);
+}
+
+void total_do_caixa(double valor_do_caixa)
+{
+
+  printf("O valor total do caixa é: R$ %.2lf\n\n", valor_do_caixa);
+}
+
+void total_de_vendas_realizadas(int quantidade_de_vendas_realizadas)
+{
+
+  printf("A quantidade de vendas realizadas foi de: %d vendas.\n\n", quantidade_de_vendas_realizadas);
+}
+
+void total_de_produtos_vendidos(int quantidade_de_produtos_vendidos)
+{
+
+  printf("A quantidade de produtos vendidos foi de: %d produtos.\n\n", quantidade_de_produtos_vendidos);
 }
