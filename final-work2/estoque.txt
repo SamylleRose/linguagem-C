@@ -1,2 +1,1 @@
-figado;carne;0;18.90
-viagra;farmaceutico;10;500.00
+Clube_social;Bolacha;23;5.99
