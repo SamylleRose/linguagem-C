@@ -1,0 +1,6 @@
+vaca
+cachorro
+girafa
+camelo
+cavalo
+gato

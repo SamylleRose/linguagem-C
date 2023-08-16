@@ -100,8 +100,8 @@ void carregar_arquivo_dos_produtos(tipo_produto *produto, int *quantidade_de_pro
   {
     sscanf(linha, "%[^;];%[^;];%d;%lf", produto[i].nome, produto[i].tipo, &produto[i].quantidade, &produto[i].valor);
   }
+  quantidade_de_produtos = i;
 
-  *quantidade_de_produtos = i;
 
   fclose(fp);
 }
