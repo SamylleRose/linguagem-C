@@ -1,1 +1,1 @@
-Clube_social;Bolacha;23;5.99
+maça;fruta;0;4.00
