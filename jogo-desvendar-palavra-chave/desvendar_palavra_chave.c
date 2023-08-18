@@ -11,20 +11,21 @@ int main()
   char matriz[7][15] = {"semaforo", "elefante", "programador", "matagal", "amazonia", "girafa", "piloto"};
   int tempo = 1;
 
-
-  printf("                                       ____                              _           _       \n");
-  printf("                                      |  _ |                            (_)         | |      \n");
-  printf("                                      | |_) | ___ _ __ ___ ________    ___ _ __    _| |  ___ \n");
-  printf("                                      |  _ < / _ | '_ ` _  |______| | / / | '_  |/ _` |/ _  |\n");
-  printf("                                      | |_) |  __/ | | | | |      | V / | | | | | (_| | (_) |\n");
-  printf("                                      |____/|___||_| |_| |_|      |_/   |_|_| |_||__,_||___/ \n");
-  printf("\n\n");
+  char abertura[] =
+      "                                       ____                              _           _       \n"
+      "                                      |  _ |                            (_)         | |      \n"
+      "                                      | |_) | ___ _ __ ___ ________    ___ _ __    _| |  ___ \n"
+      "                                      |  _ < / _ | '_ ` _  |______| | / / | '_  |/ _` |/ _  |\n"
+      "                                      | |_) |  __/ | | | | |      | V / | | | | | (_| | (_) |\n"
+      "                                      |____/|___||_| |_| |_|      |_/   |_|_| |_||__,_||___/ \n";
+  printf("%s\n\n", abertura);
   sleep(tempo);
-  printf("                                                           __ _   ___                         \n");
-  printf("                                                          / _` |/ _  |                        \n");
-  printf("                                                         | (_| | (_) |                        \n");
-  printf("                                                          |__,_||___/                         \n");
-  printf("\n\n");
+  char ao[] =
+      "                                                           __ _   ___                         \n"
+      "                                                          / _` |/ _  |                        \n"
+      "                                                         | (_| | (_) |                        \n"
+      "                                                          |__,_||___/                         \n";
+  printf("%s\n\n", ao);
   sleep(tempo);
   printf("                 _ _       _       _                              _                                   _                      \n");
   printf("                | (_)     (_)     | |                            | |                                 | |                     \n");
@@ -35,7 +36,7 @@ int main()
 
   sleep(tempo);
   printf("\n\n\n\n\n");
- 
+
   // programa(tamanho_da_palavra, palavra_criptografada, letra_ou_palavra_do_usuario, numero_aleatoria, matriz);
 
   int resposta;
@@ -45,7 +46,8 @@ int main()
     printf("\n\nDeseja continuar jogando? (1- Sim/ 2 - Não): ");
     scanf("%d", &resposta);
 
-    if (resposta == 2) {
+    if (resposta == 2)
+    {
       break;
     }
 
@@ -58,7 +60,7 @@ int main()
   //   char palavra_criptografada[tamanho_da_palavra], letra_ou_palavra_do_usuario[20], resposta;
   //   programa(tamanho_da_palavra, palavra_criptografada, letra_ou_palavra_do_usuario, numero_aleatoria, matriz);
 
-  // } 
+  // }
   return 0;
 }
 

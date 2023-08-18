@@ -1,1 +1,1 @@
-maça;fruta;0;4.00
+maça;fruta;2;4.00

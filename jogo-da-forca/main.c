@@ -122,7 +122,7 @@ void programa(int quantidade_de_palavras_de_frutas, int quantidade_de_palavras_d
       numero_aleatorio = rand() % quantidade_de_palavras_de_paises;
       tamanho_da_palavra = strlen(matrizpaises[numero_aleatorio]);
 
-      printf("%s\n", matrizpaises[numero_aleatorio]);
+      // printf("%s\n", matrizpaises[numero_aleatorio]);
 
       criptografar_palavra(tamanho_da_palavra, palavra_a_ser_criptografada);
       verificacao(tamanho_da_palavra, numero_aleatorio, matrizpaises, palavra_a_ser_criptografada);
@@ -131,7 +131,7 @@ void programa(int quantidade_de_palavras_de_frutas, int quantidade_de_palavras_d
       numero_aleatorio = rand() % quantidade_de_palavras_de_animais;
       tamanho_da_palavra = strlen(matrizanimais[numero_aleatorio]);
 
-      printf("%s\n", matrizanimais[numero_aleatorio]);
+      // printf("%s\n", matrizanimais[numero_aleatorio]);
 
       criptografar_palavra(tamanho_da_palavra, palavra_a_ser_criptografada);
       verificacao(tamanho_da_palavra, numero_aleatorio, matrizanimais, palavra_a_ser_criptografada);
